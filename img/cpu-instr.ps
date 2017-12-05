@@ -1,0 +1,403 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: cpu-instr.ps
+%%Creator: XCircuit v3.6 rev168
+%%CreationDate: Wed Nov 12 17:36:57 2014
+%%Pages: 1
+%%BoundingBox: 68 68 1108 550
+%%DocumentNeededResources: font Helvetica 
+%%EndComments
+%%BeginProlog
+%
+%  PostScript prolog for output from xcircuit
+%  Version: 3.3
+%
+%  Electrical circuit (and otherwise general) drawing program
+%
+%  Written by Tim Edwards 8/5/93--7/13/05  (tim.edwards@multigig.com)
+%  The Johns Hopkins University (1993-2004)
+%  MultiGiG, Inc. (2004-present)
+%
+%%BeginResource: procset XCIRCproc 3.3 0
+%
+% supporting definitions --- these are the primary xcircuit types.
+
+/XCIRCsave save def
+/topmat matrix currentmatrix def
+
+/fontslant { /slant exch def [1 0 slant 1 0 0] 
+    exch findfont exch makefont dup length dict /ndict exch def
+    { 1 index /FID ne { ndict 3 1 roll put } { pop pop } ifelse } forall
+    ndict definefont pop} def
+/ul { dup type /stringtype eq showflag 1 eq and { gsave 
+   currentpoint topmat setmatrix 0 0 moveto 2 index stringwidth pop (_)
+   false charpath flattenpath pathbbox grestore exch pop 1 index
+   sub setlinewidth exch pop currentpoint 3 -1 roll add moveto 0
+   rlineto stroke moveto } if } def
+/ol { dup type /stringtype eq showflag 1 eq and { gsave gsave
+   currentpoint topmat setmatrix 2 index stringwidth pop 3 index
+   true charpath flattenpath pathbbox grestore exch pop
+   exch pop topmat setmatrix (_) true charpath pathbbox grestore
+   exch pop 1 index sub setlinewidth exch pop currentpoint
+   exch 4 1 roll exch sub add moveto pop 0 rlineto stroke
+   moveto } if } def
+/stW { gsave currentpoint newpath moveto true charpath flattenpath
+	pathbbox pop exch pop sub grestore } def
+/Ts {mark Tabs aload pop counttomark 1 add array astore /Tabs exch def Tabs
+	0 currentpoint pop put} def
+/Tbn {mark Tabs aload pop counttomark dup 2 add 1 roll cleartomark 1 sub} def
+/Tb { 0 1 Tbn {Tabs exch get dup currentpoint pop lt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/Tf { Tbn -1 0 {Tabs exch get dup currentpoint pop gt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/qS { (aa) stW (a a) stW sub 4 div 0 Kn } def
+/hS { qS qS } def
+/pspc 0 def
+/cf0 { scalefont setfont } bind def
+/Kn { dup kY add /kY exch def rmoveto } bind def
+/ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.33 mul neg Kn} def
+/Ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.67 mul Kn } def
+/ns { 0 kY neg Kn /kY 0 def /fscale 1.0 def xfont0 1.0 cf0 } def
+/CR { ns 0 /Bline Bline fscale0 neg add def Bline moveto } def
+/cf { dup type /realtype ne {1.0} if exch findfont exch kY 0 eq
+	{ 40 mul dup /fscale0 exch def cf0 /xfont0 currentfont def}
+	{fscale0 mul fscale mul cf0} ifelse } def
+/ctmk { counttomark dup 2 add -1 roll pop } bind def
+/label { gsave translate 0 0 moveto dup scale neg /rotval exch def
+	/just exch def just 384 and 0 gt {/mshow {pop} def} {/mshow {show}
+	def} ifelse just 16 and 0 gt {gsave rotval rotate 0 1 dtransform
+	gsave pagemat setmatrix idtransform exch grestore 1 0 dtransform
+	gsave pagemat setmatrix idtransform exch grestore dup abs 1e-9 lt
+	{pop mul 0 gt} {3 1 roll pop pop 0 lt} ifelse grestore {-1 /rotval
+	rotval neg def /just just dup 3 and 1 ne {3 xor} if def} {1} ifelse
+	exch -1e-9 lt {-1 /rotval rotval neg def /just just dup 12 and
+	4 ne {12 xor} if def} {1} ifelse scale } if /showflag 0 def
+	/fspc pspc def /Bline 0 def /Tabs 0 array def /fscale 1.0 def
+	/kY 0 def gsave dup 1 add copy 0 exch 1 0 dtransform exch atan rotate
+	{exch dup type /stringtype eq {true charpath flattenpath} {dup type
+	/arraytype eq {exec} {12 string cvs true charpath flattenpath} ifelse}
+	ifelse} repeat pop pathbbox grestore 3 -1 roll pop 3 1 roll just
+	1 and 0 gt {just 2 and 0 gt {exch pop neg fspc sub} {exch sub 0.5
+	mul neg} ifelse} {pop neg fspc add} ifelse exch Bline exch just 4
+	and 0 gt {just 8 and 0 gt {exch pop neg fspc sub} {add 0.5 mul neg}
+	ifelse} {pop neg fspc add} ifelse rotval rotate Kn currentpoint
+	translate /showflag 1 def /Bline 0 def /Tabs 0 array def /fscale
+	1.0 def /kY 0 def {dup type /stringtype eq {mshow} {dup type
+	/arraytype eq {exec} {12 string cvs mshow} ifelse} ifelse} repeat
+	grestore } def
+/pinlabel { 4 index 32 and 0 ne hlevel 0 eq or { /pspc 10 def label
+	/pspc 0 def } { pop pop pop pop pop {pop} repeat } ifelse } def
+/pinglobal { pinlabel } def
+/infolabel { pinlabel } def
+/graphic { gsave 4 index cvx exec /DataSource get resetfile translate
+	0 0 moveto neg rotate dup scale cvx exec image grestore } def
+
+/scb { setrgbcolor } bind def  /sce { defColor aload pop scb } bind def
+/cRedef {/defColor currentcolor 3 array astore def} def
+/begingate {dup type /dicttype ne {1 dict} if begin	% default params
+	dup type /dicttype ne {1 dict} if begin		% instanced params
+	/hlevel hlevel 1 add def /defColor currentcolor sce 3 array
+	astore def gsave sce translate 0 0 moveto neg rotate dup abs scale
+	} bind def
+/endgate { /hlevel hlevel 1 sub def grestore defColor aload pop cRedef
+	scb end end} bind def
+
+/hlevel 0 def
+/tmpa [1 0 0 1 0 0] def
+/gar {8 8 true tmpa {<c0 c0 00 00 0c 0c 00 00>} imagemask} bind
+{8 8 true tmpa {<30 70 60 02 03 07 06 20>} imagemask} bind
+{8 8 true tmpa {<0c 1e 1e 0c c0 e1 e1 c0>} imagemask} bind
+{8 8 true tmpa {<0f 0f 0f 0f f0 f0 f0 f0>} imagemask} bind
+{8 8 true tmpa {<3f f3 e1 e1 f3 3f 1e 1e>} imagemask} bind
+{8 8 true tmpa {<df cf 8f 9f fd fc f8 f9>} imagemask} bind
+{8 8 true tmpa {<ff 3f 3f ff ff f3 f3 ff>} imagemask} bind 7 array astore def
+/ppaint { gsave clip tmpa dup setmatrix pathbbox neg exch neg 4 2 roll
+  neg 4 -1 roll 2 copy gt {exch} if 8 div ceiling 8 mul 4 2 roll neg 2 copy
+  gt {exch} if 8 div ceiling 8 mul 3 -1 roll -8 5 -1 roll
+  { 3 index exch 5 exch put dup -8 3 index { 3 index
+  exch 4 exch put 3 index exec } for } for pop pop pop pop grestore } bind def
+/setstyles {
+  currentlinewidth mul setlinewidth /style exch def
+  style 1 and 0 gt not {closepath} if
+  style 1024 and 0 gt {2 setlinecap} if
+  style 2 and 0 gt {currentlinewidth 4 mul dup 2 array astore 0 setdash} if
+  style 4 and 0 gt {0.5 currentlinewidth 4 mul 2 array astore 0 setdash} if
+  gsave style 16 and 0 gt { style 224 and -5 bitshift style 256 and 0 gt {
+  7 exch sub 8 div dup 1 exch sub currentrgbcolor 3 array astore
+  {3 copy mul add 4 1 roll pop} forall pop pop setrgbcolor eofill}
+  {dup 7 lt {gar exch get ppaint} {pop eofill} ifelse} ifelse}
+  {style 256 and 0 gt {1 setgray eofill} if} ifelse grestore style 8 and 0 gt 
+  style 512 eq or {newpath} {stroke} ifelse grestore} def     
+
+/polygon { gsave /num exch def moveto num 1 sub {lineto} repeat setstyles } def
+/xcarc   { gsave newpath arc setstyles } def
+/elb { matrix currentmatrix 7 -1 roll 7 -1 roll translate 5 1 roll 4 -1 roll
+	3 index div 1 scale } def
+/ele { 0 4 1 roll 0 4 1 roll } bind def
+/ellipse { gsave elb newpath ele arc setmatrix setstyles } def
+/pellip  { elb ele arc setmatrix } def
+/nellip  { elb ele arcn setmatrix } def
+/spline  { gsave moveto curveto setstyles } def
+/polyc   { {lineto} repeat } bind def
+/beginpath { gsave moveto } bind def
+/endpath { setstyles } bind def
+/bop	 { 1 setlinecap 0 setlinejoin 6 setmiterlimit 0 0 0 scb cRedef } def
+/psinsertion {/PSobj save def /showpage {} def /setpagedevice {pop} def bop
+	rotate translate dup scale} def
+/end_insert {PSobj restore} def
+/setpagemat {/pagemat matrix currentmatrix def} def
+/inchscale  {setpagemat 0.375 mul dup scale} def
+/cmscale    {setpagemat 0.35433071 mul dup scale} def
+
+%%EndResource
+%%EndProlog
+
+% XCircuit output starts here.
+
+%%BeginSetup
+
+
+%%EndSetup
+
+%%Page: cpu.ps 1
+%%PageOrientation: Portrait
+/pgsave save def bop
+1.0000 inchscale
+2.6000 setlinewidth 384 1392 translate
+
+1 1.000 0 0 32 -32 160 -32 192 0 320 0 5 polygon
+1 1.000 320 0 352 -32 480 -32 512 0 640 0 5 polygon
+1 1.000 640 0 672 -32 800 -32 832 0 960 0 5 polygon
+1 1.000 960 0 992 -32 1120 -32 1152 0 1280 0 5 polygon
+(PC) {/Helvetica cf} 2 16 0 1.000 -96 -96 label
+(CLK) {/Helvetica cf} 2 16 0 1.000 -96 -32 label
+(RST) {/Helvetica cf} 2 16 0 1.000 -96 32 label
+1 1.000 0 64 240 64 272 32 2144 32 4 polygon
+(xx) {/Helvetica cf} 2 21 0 1.000 96 -80 label
+1 1.000 192 -96 192 -96 192 -96 480 -96 512 -64 5 polygon
+1 1.000 512 -64 800 -64 832 -96 3 polygon
+1 1.000 832 -96 832 -96 832 -96 1120 -96 1152 -64 5 polygon
+1 1.000 1152 -64 1440 -64 1472 -96 3 polygon
+1 1.000 192 -96 160 -64 0 -64 3 polygon
+1 1.000 0 -96 160 -96 192 -64 3 polygon
+1 1.000 192 -64 480 -64 512 -96 3 polygon
+1 1.000 512 -96 512 -96 512 -96 800 -96 832 -64 5 polygon
+1 1.000 832 -64 1120 -64 1152 -96 3 polygon
+1 1.000 1152 -96 1152 -96 1152 -96 1440 -96 1472 -64 5 polygon
+1 1.000 1472 -64 1760 -64 1792 -96 3 polygon
+1 1.000 1472 -96 1472 -96 1472 -96 1760 -96 1792 -64 5 polygon
+1 1.000 1280 0 1312 -32 1440 -32 1472 0 1600 0 5 polygon
+1 1.000 1600 0 1632 -32 1760 -32 1792 0 1920 0 5 polygon
+(00) {/Helvetica cf} 2 21 0 1.000 320 -80 label
+(01) {/Helvetica cf} 2 21 0 1.000 656 -80 label
+(02) {/Helvetica cf} 2 21 0 1.000 992 -80 label
+(02) {/Helvetica cf} 2 21 0 1.000 1296 -80 label
+(03) {/Helvetica cf} 2 21 0 1.000 1632 -80 label
+(xxxx) {/Helvetica cf} 2 21 0 1.000 96 -144 label
+1 1.000 192 -160 192 -160 192 -160 480 -160 512 -128 5 polygon
+1 1.000 512 -128 800 -128 832 -160 3 polygon
+1 1.000 832 -160 832 -160 832 -160 1120 -160 1152 -128 5 polygon
+1 1.000 1152 -128 1440 -128 1472 -160 3 polygon
+1 1.000 192 -160 160 -128 0 -128 3 polygon
+1 1.000 0 -160 160 -160 192 -128 3 polygon
+1 1.000 192 -128 480 -128 512 -160 3 polygon
+1 1.000 512 -160 512 -160 512 -160 800 -160 832 -128 5 polygon
+1 1.000 832 -128 1120 -128 1152 -160 3 polygon
+1 1.000 1152 -160 1152 -160 1152 -160 1440 -160 1472 -128 5 polygon
+1 1.000 1472 -128 1760 -128 1792 -160 3 polygon
+1 1.000 1472 -160 1472 -160 1472 -160 1760 -160 1792 -128 5 polygon
+(xxxx) {/Helvetica cf} 2 21 0 1.000 320 -144 label
+(55xx) {/Helvetica cf} 2 21 0 1.000 656 -144 label
+(55AA) {/Helvetica cf} 2 21 0 1.000 992 -144 label
+(55AA) {/Helvetica cf} 2 21 0 1.000 1296 -144 label
+(12AA) {/Helvetica cf} 2 21 0 1.000 1632 -144 label
+(INST) {/Helvetica cf} 2 16 0 1.000 -96 -160 label
+(0:) {/Helvetica cf} 2 16 0 1.000 768 -352 label
+(1:) {/Helvetica cf} 2 16 0 1.000 768 -384 label
+(2:) {/Helvetica cf} 2 16 0 1.000 768 -416 label
+(3:) {/Helvetica cf} 2 16 0 1.000 768 -448 label
+(Address) {/Helvetica cf} 2 16 0 1.000 720 -304 label
+(Content) {/Helvetica cf} 2 16 0 1.000 1024 -304 label
+(55) {/Helvetica cf} 2 16 0 1.000 1056 -352 label
+(AA) {/Helvetica cf} 2 16 0 1.000 1056 -384 label
+(12) {/Helvetica cf} 2 16 0 1.000 1056 -416 label
+(27) {/Helvetica cf} 2 16 0 1.000 1056 -448 label
+1 1.000 1792 -64 2080 -64 2112 -96 3 polygon
+1 1.000 1792 -96 1792 -96 1792 -96 2080 -96 2112 -64 5 polygon
+1 1.000 1792 -128 2080 -128 2112 -160 3 polygon
+1 1.000 1792 -160 1792 -160 1792 -160 2080 -160 2112 -128 5 polygon
+(1227) {/Helvetica cf} 2 21 0 1.000 1952 -144 label
+(04) {/Helvetica cf} 2 21 0 1.000 1952 -80 label
+1 1.000 1920 0 1952 -32 2080 -32 2112 0 2240 0 5 polygon
+1 1.000 192 -224 192 -224 192 -224 480 -224 512 -192 5 polygon
+1 1.000 512 -192 800 -192 832 -224 3 polygon
+1 1.000 832 -224 832 -224 832 -224 1120 -224 1152 -192 5 polygon
+1 1.000 1152 -192 1440 -192 1472 -224 3 polygon
+1 1.000 192 -224 160 -192 0 -192 3 polygon
+1 1.000 0 -224 160 -224 192 -192 3 polygon
+1 1.000 192 -192 480 -192 512 -224 3 polygon
+1 1.000 512 -224 512 -224 512 -224 800 -224 832 -192 5 polygon
+1 1.000 832 -192 1120 -192 1152 -224 3 polygon
+1 1.000 1152 -224 1152 -224 1152 -224 1440 -224 1472 -192 5 polygon
+1 1.000 1472 -192 1760 -192 1792 -224 3 polygon
+1 1.000 1472 -224 1472 -224 1472 -224 1760 -224 1792 -192 5 polygon
+(fetchh) {/Helvetica cf} 2 21 0 1.000 320 -208 label
+(fetchl) {/Helvetica cf} 2 21 0 1.000 656 -208 label
+1 1.000 1792 -192 2080 -192 2112 -224 3 polygon
+1 1.000 1792 -224 1792 -224 1792 -224 2080 -224 2112 -192 5 polygon
+(exec) {/Helvetica cf} 2 21 0 1.000 976 -208 label
+(fetchh) {/Helvetica cf} 2 21 0 1.000 1296 -208 label
+(fetchl) {/Helvetica cf} 2 21 0 1.000 1632 -208 label
+(exec) {/Helvetica cf} 2 21 0 1.000 1952 -208 label
+(Memory dump:) {/Helvetica cf} 2 16 0 1.000 384 -368 label
+1 1.000 0 -592 32 -624 160 -624 192 -592 320 -592 5 polygon
+1 1.000 320 -592 352 -624 480 -624 512 -592 640 -592 5 polygon
+1 1.000 640 -592 672 -624 800 -624 832 -592 960 -592 5 polygon
+1 1.000 960 -592 992 -624 1120 -624 1152 -592 1280 -592 5 polygon
+(PC) {/Helvetica cf} 2 16 0 1.000 -96 -688 label
+(CLK) {/Helvetica cf} 2 16 0 1.000 -96 -624 label
+(RST) {/Helvetica cf} 2 16 0 1.000 -96 -560 label
+1 1.000 0 -528 240 -528 272 -560 2464 -560 4 polygon
+(xx) {/Helvetica cf} 2 21 0 1.000 96 -672 label
+1 1.000 192 -688 192 -688 192 -688 480 -688 512 -656 5 polygon
+1 1.000 512 -656 800 -656 832 -688 3 polygon
+1 1.000 832 -688 832 -688 832 -688 1120 -688 1152 -656 5 polygon
+1 1.000 1152 -656 1440 -656 1472 -688 3 polygon
+1 1.000 192 -688 160 -656 0 -656 3 polygon
+1 1.000 0 -688 160 -688 192 -656 3 polygon
+1 1.000 192 -656 480 -656 512 -688 3 polygon
+1 1.000 512 -688 512 -688 512 -688 800 -688 832 -656 5 polygon
+1 1.000 832 -656 1120 -656 1152 -688 3 polygon
+1 1.000 1152 -688 1152 -688 1152 -688 1440 -688 1472 -656 5 polygon
+1 1.000 1472 -656 1760 -656 1792 -688 3 polygon
+1 1.000 1472 -688 1472 -688 1472 -688 1760 -688 1792 -656 5 polygon
+1 1.000 1280 -592 1312 -624 1440 -624 1472 -592 1600 -592 5 polygon
+1 1.000 1600 -592 1632 -624 1760 -624 1792 -592 1920 -592 5 polygon
+(00) {/Helvetica cf} 2 21 0 1.000 320 -672 label
+(01) {/Helvetica cf} 2 21 0 1.000 656 -672 label
+(02) {/Helvetica cf} 2 21 0 1.000 992 -672 label
+(02) {/Helvetica cf} 2 21 0 1.000 1296 -672 label
+(03) {/Helvetica cf} 2 21 0 1.000 1632 -672 label
+(xxxx) {/Helvetica cf} 2 21 0 1.000 96 -800 label
+1 1.000 192 -816 192 -816 192 -816 480 -816 512 -784 5 polygon
+1 1.000 512 -784 800 -784 832 -816 3 polygon
+1 1.000 832 -816 832 -816 832 -816 1120 -816 1152 -784 5 polygon
+1 1.000 1152 -784 1440 -784 1472 -816 3 polygon
+1 1.000 192 -816 160 -784 0 -784 3 polygon
+1 1.000 0 -816 160 -816 192 -784 3 polygon
+1 1.000 192 -784 480 -784 512 -816 3 polygon
+1 1.000 512 -816 512 -816 512 -816 800 -816 832 -784 5 polygon
+1 1.000 832 -784 1120 -784 1152 -816 3 polygon
+1 1.000 1152 -816 1152 -816 1152 -816 1440 -816 1472 -784 5 polygon
+1 1.000 1472 -784 1760 -784 1792 -816 3 polygon
+1 1.000 1472 -816 1472 -816 1472 -816 1760 -816 1792 -784 5 polygon
+(0000) {/Helvetica cf} 2 21 0 1.000 320 -800 label
+(1000) {/Helvetica cf} 2 21 0 1.000 656 -800 label
+(1023) {/Helvetica cf} 2 21 0 1.000 992 -800 label
+(1023) {/Helvetica cf} 2 21 0 1.000 1296 -800 label
+(3023) {/Helvetica cf} 2 21 0 1.000 1632 -800 label
+(INST) {/Helvetica cf} 2 16 0 1.000 -96 -816 label
+1 1.000 1792 -656 2080 -656 2112 -688 3 polygon
+1 1.000 1792 -688 1792 -688 1792 -688 2080 -688 2112 -656 5 polygon
+1 1.000 1792 -784 2080 -784 2112 -816 3 polygon
+1 1.000 1792 -816 1792 -816 1792 -816 2080 -816 2112 -784 5 polygon
+(3015) {/Helvetica cf} 2 21 0 1.000 1952 -800 label
+(04) {/Helvetica cf} 2 21 0 1.000 1952 -672 label
+1 1.000 1920 -592 1952 -624 2080 -624 2112 -592 2240 -592 5 polygon
+1 1.000 192 -880 192 -880 192 -880 480 -880 512 -848 5 polygon
+1 1.000 512 -848 800 -848 832 -880 3 polygon
+1 1.000 832 -880 832 -880 832 -880 1120 -880 1152 -848 5 polygon
+1 1.000 1152 -848 1440 -848 1472 -880 3 polygon
+1 1.000 192 -880 160 -848 0 -848 3 polygon
+1 1.000 0 -880 160 -880 192 -848 3 polygon
+1 1.000 192 -848 480 -848 512 -880 3 polygon
+1 1.000 512 -880 512 -880 512 -880 800 -880 832 -848 5 polygon
+1 1.000 832 -848 1120 -848 1152 -880 3 polygon
+1 1.000 1152 -880 1152 -880 1152 -880 1440 -880 1472 -848 5 polygon
+1 1.000 1472 -848 1760 -848 1792 -880 3 polygon
+1 1.000 1472 -880 1472 -880 1472 -880 1760 -880 1792 -848 5 polygon
+(fetchh) {/Helvetica cf} 2 21 0 1.000 320 -864 label
+(fetchl) {/Helvetica cf} 2 21 0 1.000 656 -864 label
+1 1.000 1792 -848 2080 -848 2112 -880 3 polygon
+1 1.000 1792 -880 1792 -880 1792 -880 2080 -880 2112 -848 5 polygon
+(exec) {/Helvetica cf} 2 21 0 1.000 976 -864 label
+(fetchh) {/Helvetica cf} 2 21 0 1.000 1296 -864 label
+(fetchl) {/Helvetica cf} 2 21 0 1.000 1632 -864 label
+(exec) {/Helvetica cf} 2 21 0 1.000 1952 -864 label
+(0:) {/Helvetica cf} 2 16 0 1.000 896 -1104 label
+(1:) {/Helvetica cf} 2 16 0 1.000 896 -1136 label
+(2:) {/Helvetica cf} 2 16 0 1.000 896 -1168 label
+(3:) {/Helvetica cf} 2 16 0 1.000 896 -1200 label
+(Address) {/Helvetica cf} 2 16 0 1.000 848 -1056 label
+(Content) {/Helvetica cf} 2 16 0 1.000 1152 -1056 label
+(10) {/Helvetica cf} 2 16 0 1.000 1184 -1104 label
+(23) {/Helvetica cf} 2 16 0 1.000 1184 -1136 label
+(30) {/Helvetica cf} 2 16 0 1.000 1184 -1168 label
+(15) {/Helvetica cf} 2 16 0 1.000 1184 -1200 label
+(Memory dump:) {/Helvetica cf} 2 16 0 1.000 512 -1120 label
+1 1.000 2112 -656 2400 -656 2432 -688 3 polygon
+1 1.000 2112 -784 2400 -784 2432 -816 3 polygon
+1 1.000 2112 -848 2400 -848 2432 -880 3 polygon
+1 1.000 2112 -688 2112 -688 2112 -688 2400 -688 2432 -656 5 polygon
+1 1.000 2112 -816 2112 -816 2112 -816 2400 -816 2432 -784 5 polygon
+1 1.000 2112 -880 2112 -880 2112 -880 2400 -880 2432 -848 5 polygon
+(04) {/Helvetica cf} 2 21 0 1.000 2256 -672 label
+(3015) {/Helvetica cf} 2 21 0 1.000 2256 -800 label
+(fetchh) {/Helvetica cf} 2 21 0 1.000 2256 -864 label
+1 1.000 2240 -592 2272 -624 2400 -624 2432 -592 2560 -592 5 polygon
+(mem_addr) {/Helvetica cf} 2 16 0 1.000 -192 -752 label
+(xx) {/Helvetica cf} 2 21 0 1.000 96 -736 label
+1 1.000 192 -752 192 -752 192 -752 480 -752 512 -720 5 polygon
+1 1.000 512 -720 800 -720 832 -752 3 polygon
+1 1.000 832 -752 832 -752 832 -752 1120 -752 1152 -720 5 polygon
+1 1.000 1152 -720 1440 -720 1472 -752 3 polygon
+1 1.000 192 -752 160 -720 0 -720 3 polygon
+1 1.000 0 -752 160 -752 192 -720 3 polygon
+1 1.000 192 -720 480 -720 512 -752 3 polygon
+1 1.000 512 -752 512 -752 512 -752 800 -752 832 -720 5 polygon
+1 1.000 832 -720 1120 -720 1152 -752 3 polygon
+1 1.000 1152 -752 1152 -752 1152 -752 1440 -752 1472 -720 5 polygon
+1 1.000 1472 -720 1760 -720 1792 -752 3 polygon
+1 1.000 1472 -752 1472 -752 1472 -752 1760 -752 1792 -720 5 polygon
+(00) {/Helvetica cf} 2 21 0 1.000 320 -736 label
+(01) {/Helvetica cf} 2 21 0 1.000 656 -736 label
+(00) {/Helvetica cf} 2 21 0 1.000 992 -736 label
+(02) {/Helvetica cf} 2 21 0 1.000 1296 -736 label
+(03) {/Helvetica cf} 2 21 0 1.000 1632 -736 label
+1 1.000 1792 -720 2080 -720 2112 -752 3 polygon
+1 1.000 1792 -752 1792 -752 1792 -752 2080 -752 2112 -720 5 polygon
+(00) {/Helvetica cf} 2 21 0 1.000 1952 -736 label
+1 1.000 2112 -720 2400 -720 2432 -752 3 polygon
+1 1.000 2112 -752 2112 -752 2112 -752 2400 -752 2432 -720 5 polygon
+(04) {/Helvetica cf} 2 21 0 1.000 2256 -736 label
+(register A) {/Helvetica cf} 2 16 0 1.000 -192 -944 label
+(xx) {/Helvetica cf} 2 21 0 1.000 96 -928 label
+1 1.000 192 -944 192 -944 192 -944 480 -944 512 -912 5 polygon
+1 1.000 512 -912 800 -912 832 -944 3 polygon
+1 1.000 832 -944 832 -944 832 -944 1120 -944 1152 -912 5 polygon
+1 1.000 1152 -912 1440 -912 1472 -944 3 polygon
+1 1.000 192 -944 160 -912 0 -912 3 polygon
+1 1.000 0 -944 160 -944 192 -912 3 polygon
+1 1.000 192 -912 480 -912 512 -944 3 polygon
+1 1.000 512 -944 512 -944 512 -944 800 -944 832 -912 5 polygon
+1 1.000 832 -912 1120 -912 1152 -944 3 polygon
+1 1.000 1152 -944 1152 -944 1152 -944 1440 -944 1472 -912 5 polygon
+1 1.000 1472 -912 1760 -912 1792 -944 3 polygon
+1 1.000 1472 -944 1472 -944 1472 -944 1760 -944 1792 -912 5 polygon
+(00) {/Helvetica cf} 2 21 0 1.000 320 -928 label
+(00) {/Helvetica cf} 2 21 0 1.000 656 -928 label
+(00) {/Helvetica cf} 2 21 0 1.000 992 -928 label
+(23) {/Helvetica cf} 2 21 0 1.000 1296 -928 label
+(23) {/Helvetica cf} 2 21 0 1.000 1632 -928 label
+1 1.000 1792 -912 2080 -912 2112 -944 3 polygon
+1 1.000 1792 -944 1792 -944 1792 -944 2080 -944 2112 -912 5 polygon
+(23) {/Helvetica cf} 2 21 0 1.000 1952 -928 label
+1 1.000 2112 -912 2400 -912 2432 -944 3 polygon
+1 1.000 2112 -944 2112 -944 2112 -944 2400 -944 2432 -912 5 polygon
+(38) {/Helvetica cf} 2 21 0 1.000 2256 -928 label
+pgsave restore showpage
+
+%%Trailer
+XCIRCsave restore
+%%EOF

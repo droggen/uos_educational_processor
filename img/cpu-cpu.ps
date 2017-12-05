@@ -1,0 +1,776 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: cpu-cpu
+%%Creator: Xcircuit v3.3
+%%CreationDate: Sun Nov  9 23:46:35 2014
+%%Pages: 1
+%%BoundingBox: 68 68 1436 1089
+%%DocumentNeededResources: font Helvetica font Times-Roman 
+%%EndComments
+%%BeginProlog
+%
+%  PostScript prolog for output from xcircuit
+%  Version: 3.3
+%
+%  Electrical circuit (and otherwise general) drawing program
+%
+%  Written by Tim Edwards 8/5/93--7/13/05  (tim.edwards@multigig.com)
+%  The Johns Hopkins University (1993-2004)
+%  MultiGiG, Inc. (2004-present)
+%
+%%BeginResource: procset XCIRCproc 3.3 0
+%
+% supporting definitions --- these are the primary xcircuit types.
+
+/XCIRCsave save def
+/topmat matrix currentmatrix def
+
+/fontslant { /slant exch def [1 0 slant 1 0 0] 
+    exch findfont exch makefont dup length dict /ndict exch def
+    { 1 index /FID ne { ndict 3 1 roll put } { pop pop } ifelse } forall
+    ndict definefont pop} def
+/ul { dup type /stringtype eq showflag 1 eq and { gsave 
+   currentpoint topmat setmatrix 0 0 moveto 2 index stringwidth pop (_)
+   false charpath flattenpath pathbbox grestore exch pop 1 index
+   sub setlinewidth exch pop currentpoint 3 -1 roll add moveto 0
+   rlineto stroke moveto } if } def
+/ol { dup type /stringtype eq showflag 1 eq and { gsave gsave
+   currentpoint topmat setmatrix 2 index stringwidth pop 3 index
+   true charpath flattenpath pathbbox grestore exch pop
+   exch pop topmat setmatrix (_) true charpath pathbbox grestore
+   exch pop 1 index sub setlinewidth exch pop currentpoint
+   exch 4 1 roll exch sub add moveto pop 0 rlineto stroke
+   moveto } if } def
+/stW { gsave currentpoint newpath moveto true charpath flattenpath
+	pathbbox pop exch pop sub grestore } def
+/Ts {mark Tabs aload pop counttomark 1 add array astore /Tabs exch def Tabs
+	0 currentpoint pop put} def
+/Tbn {mark Tabs aload pop counttomark dup 2 add 1 roll cleartomark 1 sub} def
+/Tb { 0 1 Tbn {Tabs exch get dup currentpoint pop lt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/Tf { Tbn -1 0 {Tabs exch get dup currentpoint pop gt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/qS { (aa) stW (a a) stW sub 4 div 0 Kn } def
+/hS { qS qS } def
+/pspc 0 def
+/cf0 { scalefont setfont } bind def
+/Kn { dup kY add /kY exch def rmoveto } bind def
+/ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.33 mul neg Kn} def
+/Ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.67 mul Kn } def
+/ns { 0 kY neg Kn /kY 0 def /fscale 1.0 def xfont0 1.0 cf0 } def
+/CR { ns 0 /Bline Bline fscale0 neg add def Bline moveto } def
+/cf { dup type /realtype ne {1.0} if exch findfont exch kY 0 eq
+	{ 40 mul dup /fscale0 exch def cf0 /xfont0 currentfont def}
+	{fscale0 mul fscale mul cf0} ifelse } def
+/ctmk { counttomark dup 2 add -1 roll pop } bind def
+/label { gsave translate 0 0 moveto dup scale neg /rotval exch def
+	/just exch def just 384 and 0 gt {/mshow {pop} def} {/mshow {show}
+	def} ifelse just 16 and 0 gt {gsave rotval rotate 0 1 dtransform
+	gsave pagemat setmatrix idtransform exch grestore 1 0 dtransform
+	gsave pagemat setmatrix idtransform exch grestore dup abs 1e-9 lt
+	{pop mul 0 gt} {3 1 roll pop pop 0 lt} ifelse grestore {-1 /rotval
+	rotval neg def /just just dup 3 and 1 ne {3 xor} if def} {1} ifelse
+	exch -1e-9 lt {-1 /rotval rotval neg def /just just dup 12 and
+	4 ne {12 xor} if def} {1} ifelse scale } if /showflag 0 def
+	/fspc pspc def /Bline 0 def /Tabs 0 array def /fscale 1.0 def
+	/kY 0 def gsave dup 1 add copy 0 exch 1 0 dtransform exch atan rotate
+	{exch dup type /stringtype eq {true charpath flattenpath} {dup type
+	/arraytype eq {exec} {12 string cvs true charpath flattenpath} ifelse}
+	ifelse} repeat pop pathbbox grestore 3 -1 roll pop 3 1 roll just
+	1 and 0 gt {just 2 and 0 gt {exch pop neg fspc sub} {exch sub 0.5
+	mul neg} ifelse} {pop neg fspc add} ifelse exch Bline exch just 4
+	and 0 gt {just 8 and 0 gt {exch pop neg fspc sub} {add 0.5 mul neg}
+	ifelse} {pop neg fspc add} ifelse rotval rotate Kn currentpoint
+	translate /showflag 1 def /Bline 0 def /Tabs 0 array def /fscale
+	1.0 def /kY 0 def {dup type /stringtype eq {mshow} {dup type
+	/arraytype eq {exec} {12 string cvs mshow} ifelse} ifelse} repeat
+	grestore } def
+/pinlabel { 4 index 32 and 0 ne hlevel 0 eq or { /pspc 10 def label
+	/pspc 0 def } { pop pop pop pop pop {pop} repeat } ifelse } def
+/pinglobal { pinlabel } def
+/infolabel { pinlabel } def
+/graphic { gsave 4 index cvx exec /DataSource get resetfile translate
+	0 0 moveto neg rotate dup scale cvx exec image grestore } def
+
+/scb { setrgbcolor } bind def  /sce { defColor aload pop scb } bind def
+/cRedef {/defColor currentcolor 3 array astore def} def
+/begingate {dup type /dicttype ne {1 dict} if begin	% default params
+	dup type /dicttype ne {1 dict} if begin		% instanced params
+	/hlevel hlevel 1 add def /defColor currentcolor sce 3 array
+	astore def gsave sce translate 0 0 moveto neg rotate dup abs scale
+	} bind def
+/endgate { /hlevel hlevel 1 sub def grestore defColor aload pop cRedef
+	scb end end} bind def
+
+/hlevel 0 def
+/tmpa [1 0 0 1 0 0] def
+/gar {8 8 true tmpa {<c0 c0 00 00 0c 0c 00 00>} imagemask} bind
+{8 8 true tmpa {<30 70 60 02 03 07 06 20>} imagemask} bind
+{8 8 true tmpa {<0c 1e 1e 0c c0 e1 e1 c0>} imagemask} bind
+{8 8 true tmpa {<0f 0f 0f 0f f0 f0 f0 f0>} imagemask} bind
+{8 8 true tmpa {<3f f3 e1 e1 f3 3f 1e 1e>} imagemask} bind
+{8 8 true tmpa {<df cf 8f 9f fd fc f8 f9>} imagemask} bind
+{8 8 true tmpa {<ff 3f 3f ff ff f3 f3 ff>} imagemask} bind 7 array astore def
+/ppaint { gsave clip tmpa dup setmatrix pathbbox neg exch neg 4 2 roll
+  neg 4 -1 roll 2 copy gt {exch} if 8 div ceiling 8 mul 4 2 roll neg 2 copy
+  gt {exch} if 8 div ceiling 8 mul 3 -1 roll -8 5 -1 roll
+  { 3 index exch 5 exch put dup -8 3 index { 3 index
+  exch 4 exch put 3 index exec } for } for pop pop pop pop grestore } bind def
+/setstyles {
+  currentlinewidth mul setlinewidth /style exch def
+  style 1 and 0 gt not {closepath} if
+  style 2 and 0 gt {currentlinewidth 4 mul dup 2 array astore 0 setdash} if
+  style 4 and 0 gt {0.5 currentlinewidth 4 mul 2 array astore 0 setdash} if
+  gsave style 16 and 0 gt { style 224 and -5 bitshift style 256 and 0 gt {
+  7 exch sub 8 div dup 1 exch sub currentrgbcolor 3 array astore
+  {3 copy mul add 4 1 roll pop} forall pop pop setrgbcolor eofill}
+  {dup 7 lt {gar exch get ppaint} {pop eofill} ifelse} ifelse}
+  {style 256 and 0 gt {1 setgray eofill} if} ifelse grestore style 8 and 0 gt 
+  style 512 eq or {newpath} {stroke} ifelse grestore} def     
+
+/polygon { gsave /num exch def moveto num 1 sub {lineto} repeat setstyles } def
+/xcarc   { gsave newpath arc setstyles } def
+/elb { matrix currentmatrix 7 -1 roll 7 -1 roll translate 5 1 roll 4 -1 roll
+	3 index div 1 scale } def
+/ele { 0 4 1 roll 0 4 1 roll } bind def
+/ellipse { gsave elb newpath ele arc setmatrix setstyles } def
+/pellip  { elb ele arc setmatrix } def
+/nellip  { elb ele arcn setmatrix } def
+/spline  { gsave moveto curveto setstyles } def
+/polyc   { {lineto} repeat } bind def
+/beginpath { gsave moveto } bind def
+/endpath { setstyles } bind def
+/bop	 { 1 setlinecap 0 setlinejoin 6 setmiterlimit 0 0 0 scb cRedef } def
+/psinsertion {/PSobj save def /showpage {} def /setpagedevice {pop} def bop
+	rotate translate dup scale} def
+/end_insert {PSobj restore} def
+/setpagemat {/pagemat matrix currentmatrix def} def
+/inchscale  {setpagemat 0.375 mul dup scale} def
+/cmscale    {setpagemat 0.35433071 mul dup scale} def
+
+%%EndResource
+%%EndProlog
+
+% XCircuit output starts here.
+
+%%BeginSetup
+
+/::dffre {
+begingate
+0 1.00 -80 112 -80 -112 80 -112 80 112 4 polygon
+(d) {/Helvetica cf} 2 20 0 1.00 -64 80 label
+(en) {/Helvetica cf} 2 20 0 1.00 -64 32 label
+(q) {/Helvetica cf} 2 23 0 1.00 64 0 label
+1 1.00 -80 -64 -64 -80 -80 -96 3 polygon
+1 1.00 -80 -80 -96 -80 2 polygon
+(clk) {/Helvetica cf} 2 21 0 1.00 -32 -80 label
+1 1.00 80 0 96 0 2 polygon
+1 1.00 -80 32 -96 32 2 polygon
+1 1.00 -80 80 -96 80 2 polygon
+(rst) {/Helvetica cf} 2 20 0 1.00 -64 -16 label
+1 1.00 -80 -16 -96 -16 2 polygon
+endgate
+} def
+
+/::mux2 {
+begingate
+1 1.00 160 64 -160 64 2 polygon
+1 1.00 -160 64 -48 -48 48 -48 160 64 4 polygon
+1 1.00 0 -48 0 -64 2 polygon
+1 1.00 64 64 64 80 2 polygon
+1 1.00 -96 0 -160 0 2 polygon
+{ss} (s) {/Helvetica cf} 3 20 0 1.00 -80 0 label
+(0) {/Helvetica cf} 2 29 0 1.00 64 64 label
+1 1.00 -64 64 -64 80 2 polygon
+(1) {/Helvetica cf} 2 29 0 1.00 -64 64 label
+endgate
+} def
+
+/regbank {
+begingate
+0 1.00 -160 320 -160 -256 160 -256 160 320 4 polygon
+(rwren) {/Helvetica cf} 2 23 0 1.00 -48 80 label
+(clk) {/Helvetica cf} 2 23 0 1.00 -80 -208 label
+(rwr) {/Helvetica cf} 2 23 0 1.00 -80 160 label
+(rst) {/Helvetica cf} 2 23 0 1.00 -80 -144 label
+(d) {/Helvetica cf} 2 23 0 1.00 -128 240 label
+1 1.00 -208 256 -192 224 2 polygon
+(8) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 -208 256 label
+1 1.00 -160 240 -224 240 2 polygon
+1 1.00 -160 160 -224 160 2 polygon
+(2) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 -208 176 label
+1 1.00 -208 176 -192 144 2 polygon
+1 1.00 -160 -224 -144 -208 -160 -192 3 polygon
+1 1.00 -160 -208 -224 -208 2 polygon
+1 1.00 -160 -144 -224 -144 2 polygon
+(rrd1) {/Helvetica cf} 2 23 0 1.00 -80 -16 label
+1 1.00 -160 -16 -224 -16 2 polygon
+(rrd2) {/Helvetica cf} 2 23 0 1.00 -80 -80 label
+1 1.00 -160 -80 -224 -80 2 polygon
+1 1.00 -160 80 -224 80 2 polygon
+1 1.00 -208 0 -192 -32 2 polygon
+(2) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 -208 0 label
+1 1.00 -208 -64 -192 -96 2 polygon
+(2) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 -208 -64 label
+1 1.00 160 16 224 16 2 polygon
+1 1.00 176 32 192 0 2 polygon
+(8) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 176 32 label
+1 1.00 176 -96 192 -128 2 polygon
+(8) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 176 -96 label
+1 1.00 160 -112 224 -112 2 polygon
+{ns} (q1) {/Helvetica cf} 3 16 0 1.00 112 16 label
+(q2) {/Helvetica cf} 2 16 0 1.00 112 -112 label
+(Register bank) {/Helvetica cf} 2 21 0 1.00 0 288 label
+endgate
+} def
+
+/alu {
+begingate
+1 1.00 -64 80 -64 80 0 16 64 80 4 polygon
+1 1.00 -64 80 -224 80 2 polygon
+1 1.00 224 80 64 80 2 polygon
+1 1.00 -224 80 -64 -80 2 polygon
+1 1.00 224 80 64 -80 2 polygon
+1 1.00 -64 -80 64 -80 2 polygon
+1 1.00 0 -80 0 -112 2 polygon
+1 1.00 -112 112 -112 80 2 polygon
+1 1.00 -144 112 -144 112 2 polygon
+(A) {/Helvetica cf} 2 21 0 1.00 -112 48 label
+(B) {/Helvetica cf} 2 21 0 1.00 112 48 label
+1 1.00 144 112 144 112 2 polygon
+1 1.00 112 112 112 80 2 polygon
+(q) {/Helvetica cf} 2 21 0 1.00 0 -48 label
+1 1.00 -128 -16 -160 -16 2 polygon
+(op) {/Helvetica cf} 2 16 0 1.00 -112 -16 label
+1 1.00 128 -16 160 -16 2 polygon
+{ns} (f) {/Helvetica cf} 3 16 0 1.00 80 -16 label
+endgate
+} def
+
+/seq {
+begingate
+0 1.00 -160 144 -160 -144 160 -144 160 144 4 polygon
+(clk) {/Helvetica cf} 2 23 0 1.00 -80 -32 label
+(rst) {/Helvetica cf} 2 23 0 1.00 -80 32 label
+1 1.00 -160 -48 -144 -32 -160 -16 3 polygon
+1 1.00 -160 -32 -192 -32 2 polygon
+1 1.00 -160 32 -192 32 2 polygon
+1 1.00 160 48 192 48 2 polygon
+{ns} (fetchh) {/Helvetica cf} 3 23 0 1.00 144 48 label
+(Fetch/exec seq) {/Helvetica cf} 2 21 0 1.00 0 112 label
+{ns} (fetchl) {/Helvetica cf} 3 23 0 1.00 144 -16 label
+(exec) {/Helvetica cf} 2 23 0 1.00 144 -80 label
+1 1.00 160 -16 192 -16 2 polygon
+1 1.00 160 -80 192 -80 2 polygon
+1 1.00 -112 16 -112 32 2 polygon
+endgate
+} def
+
+/arrowhead {
+% trivial
+begingate
+8 -28 beginpath
+3 -18 3 -15 0 0 curveto
+-3 -15 -3 -18 -8 -28 curveto
+-2 -26 2 -26 8 -28 curveto
+249 1.00 endpath
+endgate
+} def
+
+/jumper {
+% trivial
+begingate
+1 1.00 0 0 10 -90.00 90.00 xcarc
+1 1.00 0 10 0 16 2 polygon
+1 1.00 0 -10 0 -16 2 polygon
+1.000 0.000 0.000 scb
+(a) {/Times-Roman cf} 2 1 0 1.00 0 16 pinlabel
+(a) {/Times-Roman cf} 2 13 0 1.00 0 -16 pinlabel
+endgate
+} def
+
+/dot {
+% trivial
+begingate
+248 1.00 0 0 6 0.00 360.00 xcarc
+1.000 0.000 0.000 scb
+(x) {/Times-Roman cf} 2 29 0 1.00 0 0 pinlabel
+endgate
+} def
+
+/_::add {
+begingate
+0 1.00 -64 32 -64 -96 64 -96 64 32 4 polygon
+(+) {/Helvetica cf} 2 21 0 1.00 0 -32 label
+1 1.00 -32 48 -32 32 2 polygon
+1 1.00 32 48 32 32 2 polygon
+1 1.00 80 -32 64 -32 2 polygon
+1 1.00 -64 -32 -80 -32 2 polygon
+(i) {ss} (c) {/Helvetica cf} 4 21 0 1.00 48 -32 label
+(o) {ss} (c) {/Helvetica cf} 4 21 0 1.00 -48 -32 label
+1 1.00 0 -96 0 -112 2 polygon
+endgate
+} def
+
+/or_gate {
+% trivial
+begingate
+1 1.00 -19 -48 96 30.00 90.00 xcarc
+1 1.00 -19 48 96 270.00 330.00 xcarc
+1 1.00 -112 0 80 -37.00 37.00 xcarc
+1 1.00 -48 48 -19 48 2 polygon
+1 1.00 -48 -48 -19 -48 2 polygon
+1.000 0.000 0.000 scb
+(Out) {/Times-Roman cf} 2 4 0 1.00 64 0 pinlabel
+(In.1) {/Times-Roman cf} 2 7 0 1.00 -40 32 pinlabel
+(In.2) {/Times-Roman cf} 2 7 0 1.00 -40 -32 pinlabel
+endgate
+} def
+
+/mux2b {
+begingate
+1 1.00 160 64 -160 64 2 polygon
+1 1.00 -160 64 -48 -48 48 -48 160 64 4 polygon
+1 1.00 0 -48 0 -64 2 polygon
+1 1.00 64 64 64 80 2 polygon
+1 1.00 160 0 96 0 2 polygon
+{ss} (s) {/Helvetica cf} 3 20 0 1.00 64 0 label
+(0) {/Helvetica cf} 2 29 0 1.00 64 64 label
+1 1.00 -64 64 -64 80 2 polygon
+(1) {/Helvetica cf} 2 29 0 1.00 -64 64 label
+endgate
+} def
+
+
+%%EndSetup
+
+%%Page: cpu.ps 1
+%%PageOrientation: Portrait
+/pgsave save def bop
+1.0000 inchscale
+2.6000 setlinewidth 1084 3648 translate
+
+1.00 0 1520 -3200 ::dffre
+1.00 0 64 -1872 ::dffre
+1.00 360 1344 -2464 ::mux2
+1.00 0 992 -2000 regbank
+1.00 0 1232 -2736 alu
+1.00 0 -368 -1488 seq
+1.00 0 64 -2224 ::dffre
+1 1.00 160 -1872 272 -1872 272 -2032 3 polygon
+1 1.00 272 -2048 368 -2048 2 polygon
+1.00 180 272 -2048 arrowhead
+(instruction\(15..0\)) {/Helvetica cf} 2 16 270 1.00 352 -2400 label
+(instruction\(15..8\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 176 
+-1856 label
+1 1.00 -32 -2144 -240 -2144 2 polygon
+1 1.00 -32 -1792 -240 -1792 2 polygon
+1 1.00 -240 -2144 -240 -1792 2 polygon
+1 1.00 -240 -1792 -656 -1792 2 polygon
+1 1.00 160 -2224 272 -2224 2 polygon
+1.00 0 272 -2048 arrowhead
+1 1.00 272 -2224 272 -2080 2 polygon
+(instruction\(7..0\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 160 
+-2256 label
+1 1.00 -32 -1840 -80 -1840 -80 -1808 3 polygon
+1.00 0 -80 -1792 jumper
+1 1.00 -80 -1776 -80 -1440 -176 -1440 3 polygon
+1 1.00 -32 -2192 -112 -2192 2 polygon
+1.00 0 -112 -2144 jumper
+1.00 0 -112 -1792 jumper
+1 1.00 -112 -2192 -112 -2160 2 polygon
+1 1.00 -112 -2128 -112 -1808 2 polygon
+1 1.00 -176 -1504 -112 -1504 -112 -1776 3 polygon
+(ram_datard) {/Helvetica cf} 2 23 0 1.00 -672 -1792 label
+1.00 270 -112 -1568 jumper
+1.00 270 -80 -1568 jumper
+1 1.00 -176 -1568 -128 -1568 2 polygon
+1 1.00 -64 -1568 608 -1568 2 polygon
+1 1.00 1216 -2112 1408 -2112 1408 -2384 3 polygon
+1 1.00 368 -2320 368 -2320 368 -2320 3 polygon
+1 1.00 368 -1840 368 -2736 2 polygon
+(source) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 1360 -2544 label
+(instruction\(7..0\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 416 
+-2304 label
+1.00 90 400 -2016 arrowhead
+1 1.00 400 -2016 768 -2016 2 polygon
+(instruction\(9..8\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-2000 label
+1.00 90 400 -2080 arrowhead
+(instruction\(1..0\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-2064 label
+1 1.00 400 -2080 768 -2080 2 polygon
+1 1.00 400 -1840 768 -1840 2 polygon
+(instruction\(9..8\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-1824 label
+1.00 90 400 -1840 arrowhead
+1 1.00 1216 -1984 1216 -2096 2 polygon
+1.00 0 1216 -2112 jumper
+1.00 0 1216 -2320 jumper
+1 1.00 1216 -2128 1216 -2304 2 polygon
+1.00 90 400 -2320 arrowhead
+1 1.00 400 -2320 1280 -2320 1280 -2384 3 polygon
+1 1.00 1216 -2352 1120 -2352 1120 -2624 3 polygon
+1 1.00 1344 -2528 1344 -2624 1328 -2624 3 polygon
+1 1.00 1216 -2336 1216 -2352 2 polygon
+1.00 270 1120 -2464 jumper
+1 1.00 1136 -2464 1184 -2464 2 polygon
+1 1.00 1104 -2464 400 -2464 2 polygon
+1.00 90 400 -2464 arrowhead
+(instruction\(12\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 -2448 
+label
+1 1.00 1376 -2752 1424 -2752 2 polygon
+1 1.00 1600 -3200 1632 -3200 2 polygon
+(flags\(3..0\)) {/Helvetica cf} 2 16 0 1.00 1616 -3232 label
+(4) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 1392 -2736 label
+1 1.00 1392 -2736 1408 -2768 2 polygon
+1 1.00 1232 -2848 1232 -2880 2 polygon
+1 1.00 1216 -2848 1248 -2864 2 polygon
+(8) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 1216 -2848 label
+1.00 0 368 -2048 dot
+1.00 360 448 -1072 _::add
+1.00 0 928 -1472 ::dffre
+(ip\(4..0\)) {/Helvetica cf} 2 16 0 1.00 1072 -1504 label
+1 1.00 1024 -1456 1040 -1488 2 polygon
+(5) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 1024 -1456 label
+1 1.00 1136 -1472 1136 -1472 2 polygon
+1.00 0 256 -1328 or_gate
+1 1.00 -80 -1440 -80 -1312 224 -1312 3 polygon
+1.00 270 -80 -1504 jumper
+1 1.00 -112 -1504 -96 -1504 2 polygon
+1 1.00 -64 -1504 112 -1504 112 -1504 96 -1504 4 polygon
+1.00 0 -80 -1440 dot
+1.00 360 512 -1328 ::mux2
+1 1.00 112 -1504 112 -1344 224 -1344 3 polygon
+1 1.00 320 -1328 352 -1328 2 polygon
+1 1.00 448 -1248 448 -1168 2 polygon
+1 1.00 1136 -1472 1136 -960 480 -960 480 -1040 4 polygon
+(1) {/Helvetica cf} 2 16 0 1.00 416 -1008 label
+1 1.00 800 -1088 800 -960 2 polygon
+(jump) {/Helvetica cf} 2 16 0 1.00 912 -1152 label
+1 1.00 576 -1248 576 -1232 736 -1232 3 polygon
+1 1.00 512 -1392 832 -1392 2 polygon
+1.00 0 1136 -1472 dot
+1 1.00 1024 -1472 1136 -1472 2 polygon
+(aluqout) {/Helvetica cf} 2 16 0 1.00 1104 -2928 label
+(ram_datawr) {/Helvetica cf} 2 23 360 1.00 -672 -3024 label
+1 1.00 480 -960 -272 -960 2 polygon
+(ram_address) {/Helvetica cf} 2 23 0 1.00 -656 -1024 label
+1 1.00 -400 -1024 -624 -1024 2 polygon
+1.00 90 -352 -1024 mux2b
+1 1.00 336 -1328 336 -1216 -352 -1216 -352 -1184 4 polygon
+1.00 0 336 -1328 dot
+(register write) {/Helvetica cf} 2 21 0 1.00 624 -1904 label
+0 1.00 480 -1888 480 -1968 768 -1968 768 -1888 4 polygon
+(decode logic) {/Helvetica cf} 2 21 0 1.00 624 -1936 label
+1 1.00 368 -1920 480 -1920 2 polygon
+1.00 0 368 -1920 dot
+(memory write) {/Helvetica cf} 2 21 0 1.00 -368 -1696 label
+(decode logic) {/Helvetica cf} 2 21 0 1.00 -368 -1728 label
+0 1.00 -512 -1664 -512 -1760 -224 -1760 -224 -1664 4 polygon
+1 1.00 608 -1568 608 -1824 2 polygon
+1.00 0 608 -1840 jumper
+1 1.00 608 -1856 608 -1872 2 polygon
+1 1.00 -512 -1712 -656 -1712 2 polygon
+(ram_we) {/Helvetica cf} 2 23 0 1.00 -672 -1712 label
+1 1.00 368 -1840 368 -1728 2 polygon
+1.00 270 -112 -1728 jumper
+1.00 270 -80 -1728 jumper
+1 1.00 -64 -1728 368 -1728 2 polygon
+1.00 0 368 -1728 dot
+1 1.00 -128 -1728 -224 -1728 2 polygon
+1.00 0 -160 -1568 dot
+1 1.00 -160 -1568 -160 -1696 2 polygon
+1 1.00 -160 -1696 -224 -1696 2 polygon
+1.00 270 -640 -1712 arrowhead
+1.00 270 -224 -1696 arrowhead
+1.00 270 -224 -1728 arrowhead
+1.00 180 608 -1888 arrowhead
+1.00 90 480 -1920 arrowhead
+1.00 90 832 -1760 arrowhead
+1.00 90 832 -1840 arrowhead
+1.00 90 832 -1920 arrowhead
+1.00 90 832 -2016 arrowhead
+1.00 90 832 -2080 arrowhead
+1.00 90 832 -2144 arrowhead
+1.00 90 832 -2208 arrowhead
+1.00 90 848 -1552 arrowhead
+1.00 90 848 -1488 arrowhead
+1.00 90 848 -1440 arrowhead
+1.00 90 848 -1392 arrowhead
+1.00 180 448 -1200 arrowhead
+1.00 180 480 -1040 arrowhead
+1.00 90 -176 -1440 arrowhead
+1.00 90 -176 -1504 arrowhead
+1.00 90 -176 -1568 arrowhead
+1.00 90 -608 -1456 arrowhead
+1.00 90 -608 -1792 arrowhead
+1.00 270 -640 -1024 arrowhead
+0 1.00 1200 -1552 1200 -1632 1488 -1632 1488 -1552 4 polygon
+(jump decode) {/Helvetica cf} 2 21 0 1.00 1344 -1568 label
+(logic) {/Helvetica cf} 2 21 0 1.00 1344 -1600 label
+1 1.00 1408 -2112 1408 -2112 2 polygon
+1 1.00 368 -1728 368 -1600 2 polygon
+1 1.00 384 -1600 592 -1600 2 polygon
+1.00 270 608 -1600 jumper
+1.00 90 400 -1600 arrowhead
+(instruction\(15..8\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 624 
+-1584 label
+1 1.00 1344 -2624 1536 -2624 1536 -1024 3 polygon
+1.00 270 1136 -1024 jumper
+1 1.00 1536 -1024 1152 -1024 2 polygon
+1.00 270 800 -1024 jumper
+1 1.00 816 -1024 1120 -1024 2 polygon
+1 1.00 672 -1088 672 -1024 2 polygon
+1 1.00 672 -1024 784 -1024 2 polygon
+1.00 360 736 -1168 mux2b
+1 1.00 816 -1440 736 -1440 2 polygon
+(1) {/Helvetica cf} 2 16 0 1.00 688 -1440 label
+1 1.00 624 -1600 1200 -1600 2 polygon
+1.00 270 1136 -1168 jumper
+1 1.00 896 -1168 1120 -1168 2 polygon
+1 1.00 1152 -1168 1360 -1168 1360 -1552 3 polygon
+1.00 90 1200 -1600 arrowhead
+1.00 360 1360 -1632 arrowhead
+1 1.00 1424 -2752 1424 -3120 2 polygon
+1 1.00 1632 -3200 1632 -1728 2 polygon
+1.00 270 1536 -1728 jumper
+1 1.00 1632 -1728 1552 -1728 2 polygon
+1 1.00 1520 -1728 1360 -1728 2 polygon
+1 1.00 1360 -1728 1360 -1648 2 polygon
+1.00 360 1360 -1520 arrowhead
+(write data) {/Helvetica cf} 2 21 0 1.00 368 -2848 label
+0 1.00 272 -2816 272 -2944 464 -2944 464 -2816 4 polygon
+1.00 0 1344 -2624 dot
+1 1.00 1328 -2624 1136 -2624 2 polygon
+1.00 270 1120 -2624 jumper
+1 1.00 1104 -2624 880 -2624 2 polygon
+1 1.00 -240 -2144 -240 -2560 -240 -2848 3 polygon
+1 1.00 -240 -2848 272 -2848 2 polygon
+1.00 90 272 -2848 arrowhead
+1.00 270 464 -2848 arrowhead
+1 1.00 368 -2736 368 -2816 2 polygon
+1.00 180 368 -2816 arrowhead
+(select) {/Helvetica cf} 2 21 0 1.00 368 -2896 label
+1.00 0 -240 -2144 dot
+1 1.00 368 -2944 368 -3024 2 polygon
+(wrdata\(7..0\)) {/Helvetica cf} 2 16 0 1.00 240 -3072 label
+1 1.00 768 -1760 688 -1760 2 polygon
+1 1.00 688 -1760 688 -1824 2 polygon
+3 1.00 688 -1872 688 -1984 2 polygon
+1 1.00 368 -3024 688 -3024 2 polygon
+1.00 180 368 -2976 arrowhead
+1 1.00 368 -3024 -656 -3024 2 polygon
+1.00 90 -608 -2880 arrowhead
+1.00 0 848 -3200 ::dffre
+1 1.00 880 -2624 880 -2848 2 polygon
+1 1.00 880 -2848 480 -2848 2 polygon
+1 1.00 1072 -2752 960 -2752 2 polygon
+1.00 270 880 -2672 jumper
+1 1.00 864 -2672 384 -2672 2 polygon
+1.00 90 400 -2672 arrowhead
+(instruction\(14..10\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-2656 label
+1 1.00 1232 -2880 480 -2880 2 polygon
+1.00 270 464 -2880 arrowhead
+1 1.00 -656 -2880 272 -2880 2 polygon
+1.00 90 272 -2880 arrowhead
+(ext_in) {/Helvetica cf} 2 23 360 1.00 -672 -2880 label
+1.00 270 -640 -3024 arrowhead
+1 1.00 880 -2848 880 -2848 2 polygon
+1.00 0 736 -2896 jumper
+0 1.00 480 -3136 480 -3200 704 -3200 704 -3136 4 polygon
+(ext write) {/Helvetica cf} 2 21 0 1.00 592 -3152 label
+(decode logic) {/Helvetica cf} 2 21 0 1.00 592 -3184 label
+1.00 90 768 -3168 arrowhead
+1.00 90 400 -2768 arrowhead
+1 1.00 560 -2768 384 -2768 2 polygon
+(instruction\(15..13\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-2752 label
+1 1.00 896 -2672 960 -2672 960 -2752 3 polygon
+1.00 0 560 -2848 jumper
+1.00 0 560 -2880 jumper
+1 1.00 560 -2768 560 -2832 2 polygon
+3 1.00 608 -1888 608 -1984 2 polygon
+1 1.00 560 -3040 560 -3136 2 polygon
+1.00 180 608 -3136 arrowhead
+0 1.00 1120 -3136 1120 -3200 1344 -3200 1344 -3136 4 polygon
+(decode logic) {/Helvetica cf} 2 21 0 1.00 1232 -3184 label
+(flag write) {/Helvetica cf} 2 21 0 1.00 1232 -3152 label
+1 1.00 560 -2896 560 -3008 2 polygon
+1.00 0 560 -3024 jumper
+1.00 180 560 -3136 arrowhead
+1 1.00 752 -3168 704 -3168 2 polygon
+1 1.00 736 -2848 736 -2880 2 polygon
+1 1.00 736 -2912 736 -3120 2 polygon
+1 1.00 736 -3120 752 -3120 2 polygon
+1.00 0 736 -2848 dot
+1 1.00 944 -3200 960 -3200 960 -3360 -656 -3360 4 polygon
+1 1.00 1344 -3168 1408 -3168 2 polygon
+1.00 90 1424 -3168 arrowhead
+1 1.00 1424 -3120 1424 -3120 2 polygon
+1 1.00 832 -2720 384 -2720 2 polygon
+(instruction\(15..10\)) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 400 
+-2704 label
+1.00 90 400 -2720 arrowhead
+1 1.00 832 -2720 832 -2832 2 polygon
+1.00 0 832 -2848 jumper
+1.00 0 832 -2880 jumper
+1 1.00 832 -2896 832 -3040 2 polygon
+1 1.00 832 -3040 1216 -3040 2 polygon
+1 1.00 1216 -3040 1216 -3136 2 polygon
+1.00 180 1216 -3136 arrowhead
+1 1.00 848 -2992 1280 -2992 2 polygon
+1 1.00 1280 -2992 1280 -3136 2 polygon
+1.00 180 1280 -3136 arrowhead
+(ext_out) {/Helvetica cf} 2 23 360 1.00 -672 -3360 label
+1.00 270 -640 -3360 arrowhead
+0 1.00 1168 -1792 1168 -1888 1424 -1888 1424 -1792 4 polygon
+(data address) {/Helvetica cf} 2 21 0 1.00 1296 -1808 label
+(generation) {/Helvetica cf} 2 21 0 1.00 1296 -1856 label
+1.00 360 1504 -1728 jumper
+1 1.00 368 -1648 592 -1648 2 polygon
+1.00 270 608 -1648 jumper
+1.00 0 368 -1648 dot
+1 1.00 624 -1648 1200 -1648 2 polygon
+1 1.00 1216 -1984 1216 -1888 2 polygon
+1.00 0 1216 -1984 dot
+1 1.00 1200 -1648 1200 -1792 2 polygon
+1.00 0 1216 -1888 arrowhead
+1.00 90 1456 -1840 arrowhead
+1.00 180 1200 -1792 arrowhead
+1 1.00 -272 -1088 368 -1088 2 polygon
+3 1.00 368 -1088 528 -1088 2 polygon
+1 1.00 1440 -1840 1504 -1840 2 polygon
+1 1.00 1504 -1840 1504 -1744 2 polygon
+1 1.00 1504 -1712 1504 -1088 2 polygon
+1 1.00 1504 -1088 1152 -1088 2 polygon
+1.00 270 1136 -1088 jumper
+1.00 270 800 -1088 jumper
+1.00 270 672 -1088 jumper
+1 1.00 1120 -1088 816 -1088 2 polygon
+1 1.00 784 -1088 688 -1088 2 polygon
+1 1.00 656 -1088 528 -1088 2 polygon
+1.00 270 736 -2992 jumper
+1.00 270 832 -2992 jumper
+1 1.00 816 -2992 752 -2992 2 polygon
+1 1.00 672 -2992 608 -2992 2 polygon
+1.00 0 688 -1840 jumper
+1 1.00 688 -1856 688 -1872 2 polygon
+1.00 0 688 -2016 jumper
+1.00 0 688 -2080 jumper
+1.00 0 688 -2320 jumper
+1.00 0 688 -2464 jumper
+1.00 0 688 -2672 jumper
+1.00 0 688 -2720 jumper
+1 1.00 688 -1984 688 -2000 2 polygon
+1 1.00 688 -2032 688 -2064 2 polygon
+1 1.00 688 -2096 688 -2304 2 polygon
+1 1.00 688 -2336 688 -2448 2 polygon
+1 1.00 688 -2480 688 -2656 2 polygon
+1 1.00 688 -2688 688 -2704 2 polygon
+1 1.00 688 -2736 688 -2832 2 polygon
+1.00 0 688 -2848 jumper
+1.00 0 688 -2880 jumper
+1.00 0 688 -2992 jumper
+1 1.00 672 -2992 720 -2992 2 polygon
+1 1.00 688 -2896 688 -2976 2 polygon
+1 1.00 688 -3008 688 -3024 2 polygon
+1 1.00 608 -1984 608 -2000 2 polygon
+1.00 0 608 -2016 jumper
+1 1.00 608 -2032 608 -2064 2 polygon
+1.00 0 608 -2080 jumper
+1 1.00 608 -2096 608 -2304 2 polygon
+1.00 0 608 -2320 jumper
+1 1.00 608 -2336 608 -2448 2 polygon
+1.00 0 608 -2464 jumper
+1 1.00 608 -2480 608 -2656 2 polygon
+1.00 0 608 -2672 jumper
+1 1.00 608 -2688 608 -2704 2 polygon
+1 1.00 608 -2736 608 -2832 2 polygon
+1.00 0 608 -2720 jumper
+1.00 0 608 -2848 jumper
+1.00 0 608 -2880 jumper
+1 1.00 608 -2992 608 -2896 2 polygon
+(exec) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 0 1.00 160 -1552 label
+(exec) {/Helvetica 0.600 cf} {/Helvetica cf} 3 16 90 1.00 624 -2912 label
+1 1.00 608 -2992 608 -3008 2 polygon
+1.00 0 608 -3024 jumper
+1 1.00 608 -3040 608 -3104 2 polygon
+0 1.00 -608 -832 -608 -3456 1792 -3456 1792 -832 4 polygon
+1 1.00 -560 -1456 -656 -1456 2 polygon
+(rst) {/Helvetica cf} 2 23 0 1.00 -672 -1456 label
+1 1.00 -608 -3424 -592 -3408 2 polygon
+1 1.00 -592 -3408 -608 -3392 2 polygon
+1 1.00 -608 -3408 -656 -3408 2 polygon
+(clk) {/Helvetica cf} 2 23 360 1.00 -672 -3408 label
+(Jump decode logic) {/Helvetica 1.200 cf} {/Helvetica cf} 3 21 0 1.00 2224 
+-1072 label
+0 1.00 1936 -1104 1936 -1360 2736 -1360 2736 -1104 4 polygon
+(instr\(15..13\)=101 and ) {/Helvetica cf} 2 16 0 1.00 1968 -1152 label
+(instr\(11..8\)=0000 or) {/Helvetica cf} 2 16 0 1.00 2000 -1200 label
+(\(instr\(11..8\)=0001 and zf=1\) or) {/Helvetica cf} 2 16 0 1.00 2000 -1248 
+label
+(\() {/Helvetica cf} 2 16 0 1.00 2320 -1152 label
+(\(instr\(11..8\)=1001 and zf=0\)) {/Helvetica cf} 2 16 0 1.00 2000 -1296 label
+(\)) {/Helvetica cf} 2 16 0 1.00 1968 -1344 label
+(Register write decode logic) {/Helvetica 1.200 cf} {/Helvetica cf} 3 21 0 1.00 
+2320 -1408 label
+0 1.00 1936 -1440 1936 -1808 2736 -1808 2736 -1440 4 polygon
+(execute=1 and \() {/Helvetica cf} 2 16 0 1.00 1968 -1488 label
+(\(instr\(15..13\)=000 and instr\(11\)=0\) or) {/Helvetica cf} 2 16 360 1.00 
+2000 -1536 label
+(instr\(15..13\)=001 or) {/Helvetica cf} 2 16 0 1.00 2000 -1584 label
+(\(instr\(15..13\)=010 and instr\(11..10\) /= 01\) or) {/Helvetica cf} 2 16 0 
+1.00 2000 -1632 label
+(\)) {/Helvetica cf} 2 16 0 1.00 1968 -1776 label
+(instr\(15..13\)=011 or) {/Helvetica cf} 2 16 360 1.00 2000 -1680 label
+(Memory write decode logic) {/Helvetica cf} 2 21 0 1.00 2320 -1856 label
+0 1.00 1936 -1888 1936 -1968 2736 -1968 2736 -1888 4 polygon
+(execute=1 and instr\(15..10\)=000X10) {/Helvetica cf} 2 16 0 1.00 1968 -1936 
+label
+(External write decode logic) {/Helvetica 1.200 cf} {/Helvetica cf} 3 21 0 1.00 
+2320 -2032 label
+0 1.00 1936 -2064 1936 -2160 2736 -2160 2736 -2064 4 polygon
+(execute=1 and instr\(15..10\)=110X00) {/Helvetica cf} 2 16 0 1.00 1952 -2128 
+label
+(Flag write decode logic) {/Helvetica 1.200 cf} {/Helvetica cf} 3 21 0 1.00 
+2320 -2208 label
+0 1.00 1936 -2240 1936 -2336 2736 -2336 2736 -2240 4 polygon
+(execute=1 and instr\(15..10\)=010X01) {/Helvetica cf} 2 16 0 1.00 1952 -2304 
+label
+(Write data select) {/Helvetica cf} 2 21 0 1.00 2224 -2384 label
+0 1.00 1936 -2416 1936 -2816 2736 -2816 2736 -2416 4 polygon
+(wrdata = ) {/Helvetica cf} 2 16 0 1.00 1968 -2464 label
+(source when instr\(15..10\)=000X00) {/Helvetica cf} 2 16 0 1.00 2000 -2512 
+label
+(ram_datard when instr\(15..10\)=000X01) {/Helvetica cf} 2 16 0 1.00 2000 -2608 
+label
+(aluqout when instr\(15..13\)=001) {/Helvetica cf} 2 16 0 1.00 2000 -2656 label
+(aluqout when instr\(15..13\)=010) {/Helvetica cf} 2 16 0 1.00 2000 -2704 label
+(aluqout when instr\(15..13\)=011) {/Helvetica cf} 2 16 0 1.00 2000 -2752 label
+(ext_in when instr\(15..10\)=110X01) {/Helvetica cf} 2 16 0 1.00 2000 -2800 
+label
+(Data address generation) {/Helvetica cf} 2 21 0 1.00 2224 -2864 label
+0 1.00 1936 -2896 1936 -3168 2736 -3168 2736 -2896 4 polygon
+(address = ) {/Helvetica cf} 2 16 0 1.00 1968 -2944 label
+(reg2out when instr\(15..10\)=000001) {/Helvetica cf} 2 16 0 1.00 2000 -2992 
+label
+(instr\(7..0\) when instr\(15..10\)=000101) {/Helvetica cf} 2 16 0 1.00 2000 
+-3040 label
+(reg2out) {/Helvetica cf} 2 16 0 1.00 1248 -2096 label
+(reg1out) {/Helvetica cf} 2 16 0 1.00 1248 -1984 label
+(reg1out when instr\(15..10\)=000010) {/Helvetica cf} 2 16 0 1.00 2000 -3088 
+label
+(reg1out when instr\(15..10\)=000110) {/Helvetica cf} 2 16 0 1.00 2000 -3136 
+label
+(CPU) {/Helvetica 1.200 cf} {/Helvetica cf} 3 16 0 1.00 576 -784 label
+(source when instr\(15..10\)=000X10) {/Helvetica cf} 2 16 0 1.00 2000 -2560 
+label
+(instr\(15..10\)=110X01) {/Helvetica cf} 2 16 360 1.00 2000 -1728 label
+pgsave restore showpage
+
+%%Trailer
+XCIRCsave restore
+%%EOF
