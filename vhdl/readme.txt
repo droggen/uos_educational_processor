@@ -1,5 +1,6 @@
 University of Sussex Educational Processor
 (c) Daniel Roggen, 2014-2017
+License: LGPL 2.1
 
 **Files**
 CPU:
